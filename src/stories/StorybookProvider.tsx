@@ -1,11 +1,12 @@
+import ButtonConfig from "./button.config.json";
+import ColorConfig from "./color.config.json";
+
 import { createContext, FC, ReactNode } from "react";
-import { ButtonConfig } from "@/components";
 
 // Provide your global data here
 const Default = {
-  button: {
-    ...ButtonConfig,
-  },
+  button: ButtonConfig,
+  color: ColorConfig,
   // ...other data
 };
 

@@ -14,13 +14,14 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     children: "button",
+    colorStyle: "primary",
   },
 };
 
-export const Style: Story = {
+export const Secondary: Story = {
   args: {
     children: "button",
-    bgColor: "blue",
+    colorStyle: "secondary",
     color: "#FFF",
   },
 };

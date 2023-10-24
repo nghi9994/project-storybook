@@ -1,7 +1,6 @@
 import * as S from "./Button.styles";
 
 import { ButtonHTMLAttributes, FC, useContext } from "react";
-import ButtonConfig from "./Button.config.json";
 
 import { StorybookContext } from "@/stories/StorybookProvider";
 import { SpacingProps, StyleProps } from "@/types";
@@ -10,11 +9,14 @@ export interface ButtonProps
   extends ButtonHTMLAttributes<HTMLButtonElement>,
     SpacingProps,
     StyleProps {
-  variant?: "contained" | "outlined" | "text";
+  colorStyle?: "primary" | "secondary";
+  variant: "contained" | "outlined" | "text";
 }
 
 const Button: FC<ButtonProps> = ({
   className = "",
+  bgColor,
+  colorStyle = "primary",
   children,
   padding,
   variant,
@@ -22,13 +24,16 @@ const Button: FC<ButtonProps> = ({
 }) => {
   const storybookContext = useContext(StorybookContext);
 
-  const buttonStyle = storybookContext.button;
+  const buttonContext = storybookContext.button;
+  const colorContext = storybookContext.color;
 
   return (
     <S.Wrapper
       className={className}
-      padding={padding || buttonStyle.default.padding}
-      variant={variant || buttonStyle.default.variant}
+      {...buttonContext}
+      bgColor={bgColor || colorContext[colorStyle]}
+      padding={padding || buttonContext.padding}
+      variant={variant || buttonContext.variant}
       {...props}
     >
       {children}
@@ -36,4 +41,4 @@ const Button: FC<ButtonProps> = ({
   );
 };
 
-export { Button, ButtonConfig };
+export { Button };
