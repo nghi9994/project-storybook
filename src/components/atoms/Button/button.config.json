@@ -1,0 +1,25 @@
+{
+  "default": {
+    "borderRadius": "4px",
+    "padding": "6px 16px",
+    "display": "flex",
+    "alignItems": "center",
+    "justifyContent": "center",
+    "variant": "contained"
+  },
+  "variant": {
+    "contained": {
+      "backgroundColor": "#1974D2FF",
+      "color": "#FFF"
+    },
+    "outlined": {
+      "backgroundColor": "#FFF",
+      "borderColor": "#1974D2FF",
+      "color": "#1974D2FF"
+    },
+    "text": {
+      "backgroundColor": "#FFF",
+      "color": "#1974D2FF"
+    }
+  }
+}
