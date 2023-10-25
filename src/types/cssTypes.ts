@@ -15,6 +15,7 @@ export interface FontProps {
 }
 
 export interface SizeProps {
+  fluid?: boolean;
   height?: number | string;
   maxHeight?: number | string;
   minHeight?: number | string;

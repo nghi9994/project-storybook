@@ -1,41 +1,20 @@
 import * as S from "./Button.styles";
 
-import { ButtonHTMLAttributes, FC, useContext } from "react";
+import { ButtonHTMLAttributes, FC } from "react";
 
-import { StorybookContext } from "@/stories/StorybookProvider";
-import { SpacingProps, StyleProps } from "@/types";
+import { SizeProps, SpacingProps, StyleProps } from "@/types";
 
 export interface ButtonProps
   extends ButtonHTMLAttributes<HTMLButtonElement>,
     SpacingProps,
+    SizeProps,
     StyleProps {
-  colorStyle?: "primary" | "secondary";
-  variant: "contained" | "outlined" | "text";
+  variant?: "primary" | "secondary" | "outlined" | "text" | string;
 }
 
-const Button: FC<ButtonProps> = ({
-  className = "",
-  bgColor,
-  colorStyle = "primary",
-  children,
-  padding,
-  variant,
-  ...props
-}) => {
-  const storybookContext = useContext(StorybookContext);
-
-  const buttonContext = storybookContext.button;
-  const colorContext = storybookContext.color;
-
+const Button: FC<ButtonProps> = ({ className = "", children, ...props }) => {
   return (
-    <S.Wrapper
-      className={className}
-      {...buttonContext}
-      bgColor={bgColor || colorContext[colorStyle]}
-      padding={padding || buttonContext.padding}
-      variant={variant || buttonContext.variant}
-      {...props}
-    >
+    <S.Wrapper className={className} {...props}>
       {children}
     </S.Wrapper>
   );

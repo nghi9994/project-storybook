@@ -8,6 +8,21 @@ import {
   StyleProps,
 } from "@/types";
 
+export const styleToString = (style: any) => {
+  return Object.keys(style).reduce(
+    (acc, key) =>
+      acc +
+      key
+        .split(/(?=[A-Z])/)
+        .join("-")
+        .toLowerCase() +
+      ":" +
+      style[key] +
+      ";",
+    ""
+  );
+};
+
 export const isCssValueValid = (value: number | string | undefined | null) => {
   if (!!value || value === 0) return true;
   return false;
@@ -112,6 +127,7 @@ export const getFontValue = ({
 };
 
 export const getSizeValue = ({
+  fluid,
   height,
   maxHeight,
   minHeight,
@@ -133,6 +149,9 @@ export const getSizeValue = ({
   }
 
   // Width
+  if (fluid) {
+    cssString += `width: 100%;`;
+  }
   if (isCssValueValid(width)) {
     cssString += `width: ${getCssValue(width)};`;
   }
