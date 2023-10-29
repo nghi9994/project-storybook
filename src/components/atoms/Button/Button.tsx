@@ -1,23 +1,34 @@
 import * as S from "./Button.styles";
 
-import { ButtonHTMLAttributes, FC } from "react";
+import { ButtonHTMLAttributes, forwardRef } from "react";
 
-import { SizeProps, SpacingProps, StyleProps } from "@/types";
+import {
+  ColorProps,
+  FontProps,
+  SizeProps,
+  SpacingProps,
+  StyleProps,
+} from "@/types";
 
 export interface ButtonProps
   extends ButtonHTMLAttributes<HTMLButtonElement>,
-    SpacingProps,
+    ColorProps,
+    FontProps,
     SizeProps,
+    SpacingProps,
     StyleProps {
-  variant?: "primary" | "secondary" | "outlined" | "text" | string;
+  disabled?: boolean;
+  variant?: "contained" | "outlined" | "text";
 }
 
-const Button: FC<ButtonProps> = ({ className = "", children, ...props }) => {
-  return (
-    <S.Wrapper className={className} {...props}>
-      {children}
-    </S.Wrapper>
-  );
-};
+const Button = forwardRef<HTMLButtonElement, ButtonProps>(
+  ({ className = "", children, variant = "contained", ...props }, ref) => {
+    return (
+      <S.Wrapper className={className} variant={variant} ref={ref} {...props}>
+        {children}
+      </S.Wrapper>
+    );
+  }
+);
 
 export { Button };

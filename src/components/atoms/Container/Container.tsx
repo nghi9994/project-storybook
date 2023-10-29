@@ -1,15 +1,31 @@
-import { FC, HTMLAttributes } from "react";
+import * as S from "./Container.styles";
 
-interface ContainerProps extends HTMLAttributes<HTMLDivElement> {}
+import {
+  DisplayProps,
+  FontProps,
+  PositionProps,
+  SizeProps,
+  SpacingProps,
+  StyleProps,
+} from "@/types";
+import { forwardRef, HTMLAttributes } from "react";
 
-export const Container: FC<ContainerProps> = ({
-  className,
-  children,
-  ...props
-}) => {
-  return (
-    <div className={className} {...props}>
-      {children}
-    </div>
-  );
-};
+// ----- Box -----
+export interface ContainerProps
+  extends HTMLAttributes<HTMLDivElement>,
+    DisplayProps,
+    FontProps,
+    PositionProps,
+    SizeProps,
+    StyleProps,
+    SpacingProps {}
+
+export const Container = forwardRef<HTMLDivElement, ContainerProps>(
+  ({ className = "", children, ...props }, ref) => {
+    return (
+      <S.ContainerWrapper className={className} ref={ref} {...props}>
+        {children}
+      </S.ContainerWrapper>
+    );
+  }
+);

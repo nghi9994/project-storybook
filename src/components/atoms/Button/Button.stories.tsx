@@ -1,37 +1,54 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { Button } from "./Button";
+import { theme } from "@/stories/StorybookProvider";
+import { getStoriesDefaultValue } from "@/utils";
+import { Button, ButtonProps } from "./Button";
 
 // More on how to set up stories at: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
-const meta: Meta<typeof Button> = {
+const meta: Meta<ButtonProps> = {
   component: Button,
+  render: ({ ...args }) => {
+    return <Button {...args} />;
+  },
+  argTypes: {
+    backgroundColor: { control: { type: "color" } },
+    borderColor: { control: { type: "color" } },
+    color: { control: { type: "color" } },
+    opacity: { control: { type: "number", min: 0, max: 1 } },
+
+    /**
+     * The function below is only for documents purpose
+     * They should be the same with default value in styles.ts file
+     */
+    ...getStoriesDefaultValue(theme.default.button),
+    ...getStoriesDefaultValue(theme.default.font),
+  },
 };
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 // More on writing stories with args: https://storybook.js.org/docs/react/writing-stories/args
-export const Primary: Story = {
+export const Contained: Story = {
   args: {
-    children: "button",
-    variant: "primary",
+    children: "Contained",
+    variant: "contained",
   },
+  // parameters: {
+  //   pseudo: { hover: true },
+  // },
 };
 
-export const Secondary: Story = {
+export const Outlined: Story = {
   args: {
-    children: "button",
-    variant: "secondary",
-    color: "#FFF",
-  },
-};
-
-export const Outline: Story = {
-  args: {
-    children: "Outline",
+    children: "Outlined",
     variant: "outlined",
-    bgColor: "none",
-    borderColor: "#000",
-    color: "#000",
+  },
+};
+
+export const Text: Story = {
+  args: {
+    children: "Text",
+    variant: "text",
   },
 };

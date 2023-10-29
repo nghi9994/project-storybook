@@ -1,13 +1,11 @@
-import ButtonConfig from "./button.config.json";
-import ColorConfig from "./color.config.json";
+import DefaultStyleConfig from "./default-style.config.json";
 
 import { createContext, FC, ReactNode } from "react";
 import { ThemeProvider } from "styled-components";
 
 // Provide your global data here
-const Default = {
-  button: ButtonConfig,
-  color: ColorConfig,
+export const theme = {
+  ...DefaultStyleConfig,
   // ...other data
 };
 
@@ -15,8 +13,8 @@ type Props = {
   children: ReactNode;
 };
 
-export const StorybookContext = createContext(Default);
+export const StorybookContext = createContext(theme);
 
 export const StorybookProvider: FC<Props> = ({ children }) => {
-  return <ThemeProvider theme={Default}>{children}</ThemeProvider>;
+  return <ThemeProvider theme={theme}>{children}</ThemeProvider>;
 };

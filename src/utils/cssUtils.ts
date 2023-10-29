@@ -1,14 +1,13 @@
-import {
-  FlexItemProps,
-  FlexProps,
-  FontProps,
-  PositionProps,
-  SizeProps,
-  SpacingProps,
-  StyleProps,
-} from "@/types";
+import { ColorProps } from "@/types";
 
-export const styleToString = (style: any) => {
+export const isCssValueValid = (
+  value: boolean | number | string | undefined | null
+) => {
+  if (!!value || value === 0) return true;
+  return false;
+};
+
+export const getStyleToString = (style: any) => {
   return Object.keys(style).reduce(
     (acc, key) =>
       acc +
@@ -23,221 +22,261 @@ export const styleToString = (style: any) => {
   );
 };
 
-export const isCssValueValid = (value: number | string | undefined | null) => {
-  if (!!value || value === 0) return true;
-  return false;
-};
+export const getCssValue = ({
+  value,
+  pxRequired = true,
+}: {
+  value: number | string | undefined;
+  pxRequired?: boolean;
+}) => {
+  // Applied for truthy values, except value 0
+  // if (!value && value !== 0) return "";
 
-export const getCssValue = (
-  value: number | string | undefined,
-  pxRequired: boolean = true
-) => {
-  // Applied for truty values, except value 0
-  if (!value && value !== 0) return "";
   if (typeof value === "number" && pxRequired) {
     return `${value}px`;
   }
 
-  return value;
+  return value ?? "";
 };
 
-export const getInitValue = () => {
-  const cssString = `
-    background: none;
-    border-radius: 0;
-    box-sizing: border-box;
-    font-size: 14px;
-    font-weight: 400;
-    line-height: 20px;
-    margin: 0;
-    padding: 0;
-    position: relative;
-    opacity: 1;
-  `;
-
-  return cssString;
-};
-
-export const getFlexValue = ({
-  flexDirection,
-  flexWrap,
-  gap,
-  alignItems,
-  justifyContent,
-  flex,
-  flexBasis,
-  flexGrow,
-  flexShrink,
-}: FlexProps & FlexItemProps) => {
+export const getColorValue = ({ primary, secondary }: ColorProps) => {
   let cssString = "";
 
-  if (isCssValueValid(flexDirection)) {
-    cssString += `flex-direction: ${getCssValue(flexDirection)};`;
+  if (isCssValueValid(primary)) {
+    cssString += `opacity: 1;`;
   }
-  if (isCssValueValid(gap)) {
-    cssString += `gap: ${getCssValue(gap)};`;
-  }
-  if (isCssValueValid(flexWrap)) {
-    cssString += `flex-wrap: ${getCssValue(flexWrap)};`;
-  }
-  if (isCssValueValid(alignItems)) {
-    cssString += `align-items: ${getCssValue(alignItems)};`;
-  }
-  if (isCssValueValid(justifyContent)) {
-    cssString += `justify-content: ${getCssValue(justifyContent)};`;
-  }
-  if (isCssValueValid(flex)) {
-    cssString += `flex: ${getCssValue(flex, false)};`;
-  }
-  if (isCssValueValid(flexBasis)) {
-    cssString += `flex-basis: ${getCssValue(flexBasis)};`;
-  }
-  if (isCssValueValid(flexGrow)) {
-    cssString += `flex-grow: ${getCssValue(flexGrow)};`;
-  }
-  if (isCssValueValid(flexShrink)) {
-    cssString += `flex-shrink: ${getCssValue(flexShrink)};`;
+  if (isCssValueValid(secondary)) {
+    cssString += `opacity: 0.7;`;
   }
 
   return cssString;
 };
 
-export const getFontValue = ({
-  fontSize,
-  fontWeight,
-  lineHeight,
-  textAlign,
-}: FontProps) => {
+export const getDisplayValue = (p: any) => {
   let cssString = "";
 
-  if (isCssValueValid(fontSize)) {
-    cssString += `font-size: ${getCssValue(fontSize)};`;
+  if (isCssValueValid(p?.boxSizing)) {
+    cssString += `box-sizing: ${getCssValue({ value: p?.boxSizing })};`;
   }
-  if (isCssValueValid(fontWeight)) {
-    cssString += `font-weight: ${getCssValue(fontWeight, false)};`;
+  if (isCssValueValid(p?.overflow)) {
+    cssString += `overflow: ${getCssValue({ value: p?.overflow })};`;
   }
-  if (isCssValueValid(lineHeight)) {
-    cssString += `line-height: ${getCssValue(lineHeight)};`;
+  if (isCssValueValid(p?.overflowX)) {
+    cssString += `overflow-x: ${getCssValue({ value: p?.overflowX })};`;
   }
-  if (isCssValueValid(textAlign)) {
-    cssString += `text-align: ${getCssValue(textAlign)};`;
+  if (isCssValueValid(p?.overflowY)) {
+    cssString += `overflow-y: ${getCssValue({ value: p?.overflowY })};`;
+  }
+  if (isCssValueValid(p?.display)) {
+    cssString += `display: ${getCssValue({ value: p?.display })};`;
+  }
+  if (isCssValueValid(p?.flexDirection)) {
+    cssString += `flex-direction: ${getCssValue({ value: p?.flexDirection })};`;
+  }
+  if (isCssValueValid(p?.gap)) {
+    cssString += `gap: ${getCssValue({ value: p?.gap })};`;
+  }
+  if (isCssValueValid(p?.flexWrap)) {
+    cssString += `flex-wrap: ${getCssValue({ value: p?.flexWrap })};`;
+  }
+  if (isCssValueValid(p?.alignItems)) {
+    cssString += `align-items: ${getCssValue({ value: p?.alignItems })};`;
+  }
+  if (isCssValueValid(p?.justifyContent)) {
+    cssString += `justify-content: ${getCssValue({
+      value: p?.justifyContent,
+    })};`;
+  }
+  if (isCssValueValid(p?.flex)) {
+    cssString += `flex: ${getCssValue({ value: p?.flex, pxRequired: false })};`;
+  }
+  if (isCssValueValid(p?.flexBasis)) {
+    cssString += `flex-basis: ${getCssValue({ value: p?.flexBasis })};`;
+  }
+  if (isCssValueValid(p?.flexGrow)) {
+    cssString += `flex-grow: ${getCssValue({ value: p?.flexGrow })};`;
+  }
+  if (isCssValueValid(p?.flexShrink)) {
+    cssString += `flex-shrink: ${getCssValue({ value: p?.flexShrink })};`;
   }
 
   return cssString;
 };
 
-export const getSizeValue = ({
-  fluid,
-  height,
-  maxHeight,
-  minHeight,
-  width,
-  maxWidth,
-  minWidth,
-}: SizeProps) => {
+export const getFontValue = (p: any) => {
+  let cssString = "";
+
+  if (isCssValueValid(p?.fontSize)) {
+    cssString += `font-size: ${getCssValue({ value: p?.fontSize })};`;
+  }
+  if (isCssValueValid(p?.fontWeight)) {
+    cssString += `font-weight: ${getCssValue({
+      value: p?.fontWeight,
+      pxRequired: false,
+    })};`;
+  }
+  if (isCssValueValid(p?.lineHeight)) {
+    cssString += `line-height: ${getCssValue({ value: p?.lineHeight })};`;
+  }
+  if (isCssValueValid(p?.textAlign)) {
+    cssString += `text-align: ${getCssValue({ value: p?.textAlign })};`;
+  }
+
+  return cssString;
+};
+
+export const getPositionValue = (p: any) => {
+  let cssString = "";
+
+  if (isCssValueValid(p?.position)) {
+    cssString += `position: ${getCssValue({ value: p?.position })};`;
+  }
+  if (isCssValueValid(p?.left)) {
+    cssString += `left: ${getCssValue({ value: p?.left })};`;
+  }
+  if (isCssValueValid(p?.right)) {
+    cssString += `right: ${getCssValue({ value: p?.right })};`;
+  }
+  if (isCssValueValid(p?.top)) {
+    cssString += `top: ${getCssValue({ value: p?.top })};`;
+  }
+  if (isCssValueValid(p?.bottom)) {
+    cssString += `bottom: ${getCssValue({ value: p?.bottom })};`;
+  }
+  if (isCssValueValid(p?.zIndex)) {
+    cssString += `z-index: ${getCssValue({
+      value: p?.zIndex,
+      pxRequired: false,
+    })};`;
+  }
+
+  return cssString;
+};
+
+export const getSizeValue = (p: any) => {
   let cssString = "";
 
   // Height
-  if (isCssValueValid(height)) {
-    cssString += `height: ${getCssValue(height)};`;
+  if (isCssValueValid(p?.height)) {
+    cssString += `height: ${getCssValue({ value: p?.height })};`;
   }
-  if (isCssValueValid(maxHeight)) {
-    cssString += `max-height: ${getCssValue(maxHeight)};`;
+  if (isCssValueValid(p?.maxHeight)) {
+    cssString += `max-height: ${getCssValue({ value: p?.maxHeight })};`;
   }
-  if (isCssValueValid(minHeight)) {
-    cssString += `min-height: ${getCssValue(minHeight)};`;
+  if (isCssValueValid(p?.minHeight)) {
+    cssString += `min-height: ${getCssValue({ value: p?.minHeight })};`;
   }
 
   // Width
-  if (fluid) {
+  if (p?.fluid) {
     cssString += `width: 100%;`;
   }
-  if (isCssValueValid(width)) {
-    cssString += `width: ${getCssValue(width)};`;
+  if (isCssValueValid(p?.width)) {
+    cssString += `width: ${getCssValue({ value: p?.width })};`;
   }
-  if (isCssValueValid(maxWidth)) {
-    cssString += `max-width: ${getCssValue(maxWidth)};`;
+  if (isCssValueValid(p?.maxWidth)) {
+    cssString += `max-width: ${getCssValue({ value: p?.maxWidth })};`;
   }
-  if (isCssValueValid(minWidth)) {
-    cssString += `min-width: ${getCssValue(minWidth)};`;
-  }
-
-  return cssString;
-};
-
-export const getSpacingValue = ({ margin, padding }: SpacingProps) => {
-  let cssString = "";
-
-  if (isCssValueValid(margin)) {
-    cssString += `margin: ${getCssValue(margin)};`;
-  }
-  if (isCssValueValid(padding)) {
-    cssString += `padding: ${getCssValue(padding)};`;
+  if (isCssValueValid(p?.minWidth)) {
+    cssString += `min-width: ${getCssValue({ value: p?.minWidth })};`;
   }
 
   return cssString;
 };
 
-export const getStyleValue = ({
-  bgColor,
-  border,
-  borderColor,
-  borderRadius,
-  color,
-  opacity,
-}: StyleProps) => {
+export const getSpacingValue = (p: any) => {
   let cssString = "";
 
-  if (isCssValueValid(bgColor)) {
-    cssString += `background: ${getCssValue(bgColor)};`;
+  if (isCssValueValid(p?.margin)) {
+    cssString += `margin: ${getCssValue({ value: p?.margin })};`;
   }
-  if (isCssValueValid(border)) {
-    cssString += `border: ${getCssValue(border)};`;
+  if (isCssValueValid(p?.marginBottom)) {
+    cssString += `margin-bottom: ${getCssValue({ value: p?.marginBottom })};`;
   }
-  if (isCssValueValid(borderColor)) {
-    cssString += `border-color: ${getCssValue(borderColor)};`;
+  if (isCssValueValid(p?.marginLeft)) {
+    cssString += `margin-left: ${getCssValue({ value: p?.marginLeft })};`;
   }
-  if (isCssValueValid(borderRadius)) {
-    cssString += `border-radius: ${getCssValue(borderRadius)};`;
+  if (isCssValueValid(p?.marginRight)) {
+    cssString += `margin-right: ${getCssValue({ value: p?.marginRight })};`;
   }
-  if (isCssValueValid(color)) {
-    cssString += `color: ${getCssValue(color)};`;
+  if (isCssValueValid(p?.marginTop)) {
+    cssString += `margin-top: ${getCssValue({ value: p?.marginTop })};`;
   }
-  if (isCssValueValid(opacity)) {
-    cssString += `opacity: ${getCssValue(opacity, false)};`;
+  if (isCssValueValid(p?.padding)) {
+    cssString += `padding: ${getCssValue({ value: p?.padding })};`;
+  }
+  if (isCssValueValid(p?.paddingBottom)) {
+    cssString += `padding-bottom: ${getCssValue({ value: p?.paddingBottom })};`;
+  }
+  if (isCssValueValid(p?.paddingLeft)) {
+    cssString += `padding-left: ${getCssValue({ value: p?.paddingLeft })};`;
+  }
+  if (isCssValueValid(p?.paddingRight)) {
+    cssString += `padding-right: ${getCssValue({ value: p?.paddingRight })};`;
+  }
+  if (isCssValueValid(p?.paddingTop)) {
+    cssString += `padding-top: ${getCssValue({ value: p?.paddingTop })};`;
   }
 
   return cssString;
 };
 
-export const getPositionValue = ({
-  position,
-  left,
-  right,
-  top,
-  bottom,
-  zIndex,
-}: PositionProps) => {
+export const getStyleValue = (p: any) => {
   let cssString = "";
 
-  if (isCssValueValid(position)) {
-    cssString += `position: ${getCssValue(position)};`;
+  if (isCssValueValid(p?.backgroundColor)) {
+    cssString += `background: ${getCssValue({ value: p?.backgroundColor })};`;
   }
-  if (isCssValueValid(left)) {
-    cssString += `left: ${getCssValue(left)};`;
+  if (isCssValueValid(p?.border)) {
+    cssString += `border: ${getCssValue({ value: p?.border })};`;
   }
-  if (isCssValueValid(right)) {
-    cssString += `right: ${getCssValue(right)};`;
+  if (isCssValueValid(p?.borderBottom)) {
+    cssString += `border-bottom: ${getCssValue({ value: p?.borderBottom })};`;
   }
-  if (isCssValueValid(top)) {
-    cssString += `top: ${getCssValue(top)};`;
+  if (isCssValueValid(p?.borderLeft)) {
+    cssString += `border-left: ${getCssValue({ value: p?.borderLeft })};`;
   }
-  if (isCssValueValid(bottom)) {
-    cssString += `bottom: ${getCssValue(bottom)};`;
+  if (isCssValueValid(p?.borderRight)) {
+    cssString += `border-right: ${getCssValue({ value: p?.borderRight })};`;
   }
-  if (isCssValueValid(zIndex)) {
-    cssString += `z-index: ${getCssValue(zIndex, false)};`;
+  if (isCssValueValid(p?.borderTop)) {
+    cssString += `border-top: ${getCssValue({ value: p?.borderTop })};`;
+  }
+  if (isCssValueValid(p?.borderColor)) {
+    cssString += `border-color: ${getCssValue({ value: p?.borderColor })};`;
+  }
+  if (isCssValueValid(p?.borderRadius)) {
+    cssString += `border-radius: ${getCssValue({ value: p?.borderRadius })};`;
+  }
+  if (isCssValueValid(p?.color)) {
+    cssString += `color: ${getCssValue({ value: p?.color })};`;
+  }
+  if (isCssValueValid(p?.opacity)) {
+    cssString += `opacity: ${getCssValue({
+      value: p?.opacity,
+      pxRequired: false,
+    })};`;
+  }
+  if (isCssValueValid(p?.outline)) {
+    cssString += `outline: ${getCssValue({ value: p?.outline })};`;
   }
 
   return cssString;
+};
+
+export const getStoriesDefaultValue = (theme: any) => {
+  const obj: any = {};
+  for (const prop in theme) {
+    const isColor = prop.match(/color/gi);
+    obj[prop] = {
+      control: isColor ? "color" : "",
+      table: {
+        defaultValue: {
+          summary: theme[prop],
+        },
+      },
+    };
+  }
+
+  return obj;
 };

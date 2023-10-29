@@ -1,9 +1,12 @@
 import {
+  getColorValue,
+  getFontValue,
   getSizeValue,
   getSpacingValue,
+  getStyleToString,
   getStyleValue,
-  styleToString,
 } from "@/utils";
+
 import styled from "styled-components";
 
 import type { ButtonProps } from "./Button";
@@ -11,31 +14,42 @@ import type { ButtonProps } from "./Button";
 export const Wrapper = styled.button<ButtonProps>`
   ${(p) => {
     return `
-      ${styleToString(p.theme.button)}
+      // Default styles
+      ${getStyleToString(p.theme.default.button)}
+      ${getStyleToString(p.theme.default.font)}
 
-      ${getSizeValue({
-        fluid: p.fluid,
-        height: p.height,
-        maxHeight: p.maxHeight,
-        minHeight: p.minHeight,
-        width: p.width,
-        maxWidth: p.maxWidth,
-        minWidth: p.minWidth,
-      })};
+      ${
+        p.variant === "outlined"
+          ? `
+            background-color: unset;
+            border: 1px solid #000;   
+            `
+          : ""
+      }
+      ${
+        p.variant === "text"
+          ? `
+            background-color: unset;
+            border: none;   
+            `
+          : ""
+      }
 
-      ${getSpacingValue({
-        margin: p.margin,
-        padding: p.padding,
-      })}
-    
-      ${getStyleValue({
-        bgColor: p.bgColor,
-        border: p.border,
-        borderColor: p.borderColor,
-        borderRadius: p.borderRadius,
-        color: p.color,
-        opacity: p.opacity,
-      })}
+      ${
+        p.disabled
+          ? `
+            cursor: not-allowed;
+            opacity: 0.5;
+            `
+          : ``
+      }
+
+      // Custom styles
+      ${getColorValue(p)}
+      ${getFontValue(p)}
+      ${getSizeValue(p)}
+      ${getSpacingValue(p)}
+      ${getStyleValue(p)}
     `;
   }}
 `;
