@@ -31,8 +31,11 @@ type Story = StoryObj<typeof meta>;
 // More on writing stories with args: https://storybook.js.org/docs/react/writing-stories/args
 export const Contained: Story = {
   args: {
-    children: "Contained",
+    children: "Contained Button",
     variant: "contained",
+    backgroundColor: theme.color.darkGray,
+    backgroundColorAlpha: 0.2,
+    onClick: () => console.log("@log Click contained button"),
   },
   // parameters: {
   //   pseudo: { hover: true },
@@ -41,14 +44,16 @@ export const Contained: Story = {
 
 export const Outlined: Story = {
   args: {
-    children: "Outlined",
+    children: "Outlined Button",
     variant: "outlined",
+    onClick: () => console.log("@log Click outlined button"),
   },
 };
 
 export const Text: Story = {
   args: {
-    children: "Text",
+    children: "Text Button",
     variant: "text",
+    onClick: () => console.log("@log Click text button"),
   },
 };

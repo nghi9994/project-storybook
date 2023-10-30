@@ -33,7 +33,8 @@ export const Block: Story = {
     margin: 5,
     padding: 10,
     display: "block",
-    border: "1px solid #eee",
+    border: `1px solid ${theme.color.lightGray}`,
+    borderRadius: "4px",
   },
 };
 
@@ -43,7 +44,9 @@ export const InlineBlock: Story = {
     margin: 5,
     padding: 10,
     display: "inline-block",
-    border: "1px solid #eee",
+    fluid: true,
+    border: `1px solid ${theme.color.lightGray}`,
+    borderRadius: "4px",
   },
 };
 
@@ -55,6 +58,7 @@ export const Flex: Story = {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    border: "1px solid #eee",
+    border: `1px solid ${theme.color.lightGray}`,
+    borderRadius: "4px",
   },
 };

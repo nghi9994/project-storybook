@@ -7,21 +7,6 @@ export const isCssValueValid = (
   return false;
 };
 
-export const getStyleToString = (style: any) => {
-  return Object.keys(style).reduce(
-    (acc, key) =>
-      acc +
-      key
-        .split(/(?=[A-Z])/)
-        .join("-")
-        .toLowerCase() +
-      ":" +
-      style[key] +
-      ";",
-    ""
-  );
-};
-
 export const getCssValue = ({
   value,
   pxRequired = true,
@@ -168,11 +153,10 @@ export const getSizeValue = (p: any) => {
   }
 
   // Width
-  if (p?.fluid) {
-    cssString += `width: 100%;`;
-  }
-  if (isCssValueValid(p?.width)) {
-    cssString += `width: ${getCssValue({ value: p?.width })};`;
+  if (isCssValueValid(p?.width) || p?.fluid) {
+    cssString += `width: ${getCssValue({
+      value: p?.fluid ? "100%" : p?.width,
+    })};`;
   }
   if (isCssValueValid(p?.maxWidth)) {
     cssString += `max-width: ${getCssValue({ value: p?.maxWidth })};`;
@@ -225,7 +209,10 @@ export const getStyleValue = (p: any) => {
   let cssString = "";
 
   if (isCssValueValid(p?.backgroundColor)) {
-    cssString += `background: ${getCssValue({ value: p?.backgroundColor })};`;
+    cssString += `background: ${hexToRgb(
+      p?.backgroundColor,
+      p?.backgroundColorAlpha
+    )};`;
   }
   if (isCssValueValid(p?.border)) {
     cssString += `border: ${getCssValue({ value: p?.border })};`;
@@ -264,6 +251,10 @@ export const getStyleValue = (p: any) => {
   return cssString;
 };
 
+/**
+ * @param theme object, which is from object of style
+ * @returns object, which is default value for storybook component
+ */
 export const getStoriesDefaultValue = (theme: any) => {
   const obj: any = {};
   for (const prop in theme) {
@@ -280,3 +271,41 @@ export const getStoriesDefaultValue = (theme: any) => {
 
   return obj;
 };
+
+/* ---------- START: Convert css style  ---------- */
+/**
+ * @param style object of style
+ * @returns string of css style
+ * @description convert css object into css string to use in styled-component template string
+ */
+export function getStyleToString(style: any) {
+  return Object.keys(style).reduce(
+    (acc, key) =>
+      acc +
+      key
+        .split(/(?=[A-Z])/)
+        .join("-")
+        .toLowerCase() +
+      ":" +
+      style[key] +
+      ";",
+    ""
+  );
+}
+
+/**
+ * @param hex
+ * @param opacity
+ * @returns rgba string
+ * @description convert HEX to RGBA color
+ */
+export function hexToRgb(hex: string, opacity: number = 1) {
+  const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+  return result
+    ? `rgba(${parseInt(result[1], 16)},${parseInt(result[2], 16)},${parseInt(
+        result[3],
+        16
+      )}, ${opacity >= 0 && opacity <= 1 ? opacity : 1})`
+    : hex;
+}
+/* ---------- END: Convert css style ---------- */

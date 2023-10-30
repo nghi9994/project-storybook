@@ -134,7 +134,11 @@ export interface SpacingProps {
 }
 
 export interface StyleProps {
+  /**
+   * backgroundColor should be HEX color to use Alpha index
+   */
   backgroundColor?: string | "transparent" | GlobalValue;
+  backgroundColorAlpha?: number;
   borderColor?: string;
   borderRadius?: string;
   border?: string;
@@ -143,6 +147,7 @@ export interface StyleProps {
   borderRight?: string;
   borderTop?: string;
   color?: string;
+  colorVariant?: "success" | "error" | "info" | "warning";
   opacity?: number;
   outline?: string;
 }

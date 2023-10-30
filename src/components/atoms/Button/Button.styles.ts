@@ -22,7 +22,7 @@ export const Wrapper = styled.button<ButtonProps>`
         p.variant === "outlined"
           ? `
             background-color: unset;
-            border: 1px solid #000;   
+            border: 1px solid ${p.theme.color.gray};   
             `
           : ""
       }
