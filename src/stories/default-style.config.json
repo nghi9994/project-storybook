@@ -1,7 +1,7 @@
 {
   "default": {
     "button": {
-      "backgroundColor": "#D3D3D3",
+      "background": "#D3D3D3",
       "border": "none",
       "borderRadius": "4px",
       "cursor": "pointer",
@@ -28,6 +28,10 @@
     "red": "#FF0000",
     "darkRed": "#8B0000",
     "lightCoral": "#F08080",
+
+    "orange": "#FFA500",
+    "orangeRed": "#FF4500",
+    "tomato": "#FF6347",
 
     "green": "#008000",
     "darkGreen": "#006400",

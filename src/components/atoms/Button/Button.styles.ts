@@ -19,17 +19,17 @@ export const Wrapper = styled.button<ButtonProps>`
       ${getStyleToString(p.theme.default.font)}
 
       ${
-        p.variant === "outlined"
+        p.buttonVariant === "outlined"
           ? `
-            background-color: unset;
+            background: none;
             border: 1px solid ${p.theme.color.gray};   
             `
           : ""
       }
       ${
-        p.variant === "text"
+        p.buttonVariant === "text"
           ? `
-            background-color: unset;
+            background: none;
             border: none;   
             `
           : ""

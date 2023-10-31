@@ -248,6 +248,113 @@ export const getStyleValue = (p: any) => {
     cssString += `outline: ${getCssValue({ value: p?.outline })};`;
   }
 
+  // Success style
+  if (p?.colorVariant === "success") {
+    cssString += `
+      color: ${p.theme.color.green};
+    `;
+    if (p?.buttonVariant === "contained") {
+      cssString += `
+        background: ${p.theme.color.green};
+        color: ${p.theme.color.white};
+      `;
+    }
+    if (p?.buttonVariant === "outlined") {
+      cssString += `
+        background: none;
+        border: 1px solid ${p.theme.color.green};
+        color: ${p.theme.color.green};
+      `;
+    }
+    if (p?.buttonVariant === "text") {
+      cssString += `
+        background: none;
+        color: ${p.theme.color.green};
+      `;
+    }
+  }
+
+  // Info style
+  if (p?.colorVariant === "info") {
+    cssString += `
+      color: ${p.theme.color.blue};
+    `;
+    if (p?.buttonVariant === "contained") {
+      cssString += `
+        background: ${p.theme.color.blue};
+        border-color: ${p.theme.color.blue};
+        color: ${p.theme.color.white};
+      `;
+    }
+    if (p?.buttonVariant === "outlined") {
+      cssString += `
+        background: none;
+        border: 1px solid ${p.theme.color.blue};
+        color: ${p.theme.color.blue};
+      `;
+    }
+    if (p?.buttonVariant === "text") {
+      cssString += `
+        background: none;
+        color: ${p.theme.color.blue};
+      `;
+    }
+  }
+
+  // Warning style
+  if (p?.colorVariant === "warning") {
+    cssString += `
+      color: ${p.theme.color.orange};
+    `;
+    if (p?.buttonVariant === "contained") {
+      cssString += `
+        background: ${p.theme.color.orange};
+        border-color: ${p.theme.color.orange};
+        color: ${p.theme.color.white};
+      `;
+    }
+    if (p?.buttonVariant === "outlined") {
+      cssString += `
+        background: none;
+        border: 1px solid ${p.theme.color.orange};
+        color: ${p.theme.color.orange};
+      `;
+    }
+    if (p?.buttonVariant === "text") {
+      cssString += `
+        background: none;
+        color: ${p.theme.color.orange};
+      `;
+    }
+  }
+
+  // Error style
+  if (p?.colorVariant === "error") {
+    cssString += `
+      color: ${p.theme.color.red};
+    `;
+    if (p?.buttonVariant === "contained") {
+      cssString += `
+        background: ${p.theme.color.red};
+        border-color: ${p.theme.color.red};
+        color: ${p.theme.color.white};
+      `;
+    }
+    if (p?.buttonVariant === "outlined") {
+      cssString += `
+        background: none;
+        border: 1px solid ${p.theme.color.red};
+        color: ${p.theme.color.red};
+      `;
+    }
+    if (p?.buttonVariant === "text") {
+      cssString += `
+        background: none;
+        color: ${p.theme.color.red};
+      `;
+    }
+  }
+
   return cssString;
 };
 

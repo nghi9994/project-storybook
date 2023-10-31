@@ -29,12 +29,19 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     children: "Typography",
-    backgroundColor: theme.color.lightGray,
-    backgroundColorAlpha: 0.5,
-    color: theme.color.black,
+    color: theme.color.gray,
     fontSize: 20,
     fontWeight: 500,
     padding: 20,
-    borderRadius: "4px",
+  },
+};
+
+export const ColorVariant: Story = {
+  args: {
+    children: "Typography",
+    color: theme.color.gray,
+    colorVariant: "error",
+    fontSize: 30,
+    fontWeight: "bold",
   },
 };

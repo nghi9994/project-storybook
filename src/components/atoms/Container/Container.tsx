@@ -17,7 +17,7 @@ export interface ContainerProps
     FontProps,
     PositionProps,
     SizeProps,
-    StyleProps,
+    Omit<StyleProps, "colorVariant">,
     SpacingProps {}
 
 export const Container = forwardRef<HTMLDivElement, ContainerProps>(

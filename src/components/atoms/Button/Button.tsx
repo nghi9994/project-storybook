@@ -18,13 +18,21 @@ export interface ButtonProps
     SpacingProps,
     StyleProps {
   disabled?: boolean;
-  variant?: "contained" | "outlined" | "text";
+  buttonVariant?: "contained" | "outlined" | "text";
 }
 
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className = "", children, variant = "contained", ...props }, ref) => {
+  (
+    { className = "", children, buttonVariant = "contained", ...props },
+    ref
+  ) => {
     return (
-      <S.Wrapper className={className} variant={variant} ref={ref} {...props}>
+      <S.Wrapper
+        className={className}
+        buttonVariant={buttonVariant}
+        ref={ref}
+        {...props}
+      >
         {children}
       </S.Wrapper>
     );

@@ -147,7 +147,7 @@ export interface StyleProps {
   borderRight?: string;
   borderTop?: string;
   color?: string;
-  colorVariant?: "success" | "error" | "info" | "warning";
+  colorVariant?: "success" | "error" | "info" | "warning" | "unset";
   opacity?: number;
   outline?: string;
 }
